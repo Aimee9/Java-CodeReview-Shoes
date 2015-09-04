@@ -1,5 +1,14 @@
 <h3>$store.getName()</h3>
 <a href="/delete/store/$store.getId()" class="btn btn-danger">Delete Store</a>
+
+<form action='/update/store/$store.getId()' method='post'>
+  <div class='form-group'>
+    <label>Change Store Name:</label>
+    <input type="text" name="updateName" id="updateName" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-warning">Submit!</button>
+</form>
+
 <table class="table table-striped">
   <thead>
     <tr>

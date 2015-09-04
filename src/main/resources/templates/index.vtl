@@ -1,0 +1,24 @@
+<div class='header'>
+    <h1>Shoe Shopping!</h1>
+</div>
+
+
+<div class="lists">
+<ul>
+#foreach($store in $stores)
+
+  <li><a href="/stores/$store.getId()">$store.getName()</a></li>
+
+#end
+</ul>
+</div>
+
+<div class="buttons">
+<form action='/stores' method='post'>
+  <div class='form-group'>
+    <label>Add New Store</label>
+    <input type="text" name="newStore" id="newStore" class="form-control">
+  </div>
+  <button type="submit" class='btn btn-info'>Submit!</button>
+</form>
+</div>

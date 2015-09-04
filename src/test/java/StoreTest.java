@@ -50,4 +50,29 @@ public class StoreTest {
     myStore.delete();
     assertEquals(0, Store.all().size());
   }
+
+@Test
+ public void addBrand_addsBrandToStore() {
+   Brand myBrand = new Brand("Mizuno");
+   myBrand.save();
+   Store myStore = new Store("Bundy Shoes");
+   myStore.save();
+   myStore.addBrand(myBrand);
+   Brand savedBrand = myStore.getBrands().get(0);
+   assertTrue(myBrand.equals(savedBrand));
+ }
+
+ @Test
+ public void getBrands_returnAllBrands_ArrayList() {
+   Brand myBrandOne = new Brand("Mizuno");
+   myBrandOne.save();
+   Brand myBrandTwo = new Brand("Adidas");
+   myBrandTwo.save();
+   Store myStore = new Store("Bundy Shoes");
+   myStore.save();
+   myStore.addBrand(myBrandOne);
+   myStore.addBrand(myBrandTwo);
+   List savedBrands = myStore.getBrands();
+   assertEquals(savedBrands.size(), 2);
+ }
 }

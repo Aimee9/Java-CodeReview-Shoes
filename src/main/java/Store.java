@@ -69,16 +69,17 @@ public class Store {
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
-      String deleteQuery = "DELETE FROM stores WHERE id = :id;";
-        con.createQuery(deleteQuery)
-          .addParameter("id", id)
-          .executeUpdate();
-      String joinDeleteQuery = "DELETE FROM brands_stores WHERE store_id = :storeId";
-        con.createQuery(joinDeleteQuery)
-        .addParameter("storeId", this.getId())
+      String sql = "DELETE FROM stores WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("id", id)
         .executeUpdate();
-    }
-  }
+
+      String joinDeleteQuery = "DELETE FROM brands_stores WHERE store_id = :store_id";
+       con.createQuery(joinDeleteQuery)
+         .addParameter("store_id", this.getId())
+         .executeUpdate();
+   }
+ }
 
   public void addBrand(Brand brand) {
     try (Connection con = DB.sql2o.open()) {
@@ -90,21 +91,12 @@ public class Store {
     }
   }
 
-  public ArrayList<Brand> getBrands() {
+  public List<Brand> getBrands() {
    try (Connection con = DB.sql2o.open()) {
-     String sql = "SELECT brand_id FROM brands_stores WHERE store_id = :store_id";
-     List<Integer> brandIds = con.createQuery(sql)
-       .addParameter("store_id", this.getId())
-       .executeAndFetch(Integer.class);
-     ArrayList<Brand> brands = new ArrayList<Brand>();
-     for (Integer brandId : brandIds) {
-       String brandQuery = "SELECT * FROM brands WHERE id = :brandId";
-       Brand brand = con.createQuery(brandQuery)
-         .addParameter("brandId", brandId)
-         .executeAndFetchFirst(Brand.class);
-       brands.add(brand);
-     }
-     return brands;
+     String sql = "SELECT brands.* FROM stores JOIN brands_stores ON (brands_stores.store_id = stores.id) JOIN brands ON (brands_stores.brand_id = brands.id) WHERE store_id=:id";
+     return con.createQuery(sql)
+     .addParameter("id", id)
+     .executeAndFetch(Brand.class);
    }
- }
+  }
 }

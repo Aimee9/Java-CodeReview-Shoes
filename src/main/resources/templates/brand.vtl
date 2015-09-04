@@ -1,0 +1,23 @@
+<h3>$brand.getLabel()</h3>
+<a href="/delete/store/$store.getId()" class="btn btn-danger">Delete Brand</a>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Stores that Carry this Brand</th>
+    </tr>
+  </thead>
+  <tbody>
+      #foreach ($store in $stores)
+      <tr>
+        <td><a href="/store/$store.getId()">$store.getName()</a></td>
+        <td>
+          <form action="/removestore/store/$store.getId()/brand/$brand.getId()" method="get">
+            <button type="submit" class="btn btn-warning">This store no longer carries $brand.getLabel()</button>
+          </form>
+        </td>
+      </tr>
+      #end
+  </tbody>
+</table>

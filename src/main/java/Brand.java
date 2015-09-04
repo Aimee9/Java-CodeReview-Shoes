@@ -65,4 +65,22 @@ public class Brand {
         .executeUpdate();
     }
   }
+
+  public ArrayList<Store> getStores() {
+   try (Connection con = DB.sql2o.open()) {
+     String sql = "SELECT store_id FROM brands_stores WHERE brand_id = :brand_id";
+     List<Integer> storeIds = con.createQuery(sql)
+       .addParameter("brand_id", this.getId())
+       .executeAndFetch(Integer.class);
+     ArrayList<Store> stores = new ArrayList<Store>();
+     for (Integer storeId : storeIds) {
+       String storeQuery = "SELECT * FROM stores WHERE id = :storeId";
+       Store store = con.createQuery(storeQuery)
+         .addParameter("storeId", storeId)
+         .executeAndFetchFirst(Store.class);
+       stores.add(store);
+     }
+     return stores;
+   }
+ }
 }

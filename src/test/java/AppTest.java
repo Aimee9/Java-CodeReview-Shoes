@@ -47,4 +47,13 @@ public class AppTest extends FluentTest {
     goTo(storePath);
     assertThat(pageSource()).contains("Shoepie");
     }
+
+    // @Test
+    // public void deleteIndividualStore() {
+    //   Store myStore = new Store("Shoepie");
+    //   myStore.save();
+    //   String storePath = String.format("http://localhost:4567/store/%d", myStore.getId());
+    //   goTo(storePath);
+    //   assertThat(pageSource()).contains("Shoepie");
+    //   }
 }

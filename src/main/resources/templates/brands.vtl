@@ -1,0 +1,21 @@
+<div class='header'>
+    <h1>All the Brands</h1>
+</div>
+<!-- List of Brands -->
+<div class="lists">
+  <ul>
+    #foreach($brand in $brands)
+    <li><a href="/brand/$brand.getId()">$brand.getLabel()</a></li>
+    #end
+  </ul>
+</div>
+<!-- Button to Add New Brands -->
+<div class="buttons">
+<form action='/brands' method='post'>
+  <div class='form-group'>
+    <label>Add New Brand</label>
+    <input type="text" name="newBrand" id="newBrand" class="form-control">
+  </div>
+  <button type="submit" class='btn btn-info'>Submit!</button>
+</form>
+</div>

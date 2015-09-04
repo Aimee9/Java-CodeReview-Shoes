@@ -12,7 +12,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Store Name</th>
+      <th>Brands Carried by this Store</th>
     </tr>
   </thead>
   <tbody>
@@ -28,3 +28,13 @@
       #end
   </tbody>
 </table>
+<!-- Button to Add New Brands -->
+<div class="buttons">
+<form action='/brands' method='post'>
+  <div class='form-group'>
+    <label>Add New Brand</label>
+    <input type="text" name="newBrand" id="newBrand" class="form-control">
+  </div>
+  <button type="submit" class='btn btn-info'>Submit!</button>
+</form>
+</div>

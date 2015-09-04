@@ -38,11 +38,30 @@ public class App {
     Integer storeId = Integer.parseInt(request.params(":id"));
      Store store = Store.find(storeId);
      model.put("store", store);
-     //model.put("brands", Brand.all());
-     //model.put("storeBrands", store.getBrands());
+     model.put("brands", Brand.all());
+     model.put("storeBrands", store.getBrands());
      model.put("template", "templates/store.vtl");
      return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
 
+
+  get("/delete/store/:id", (request, response) -> {
+       HashMap<String, Object> model = new HashMap<String, Object>();
+       int storeId = Integer.parseInt(request.params(":id"));
+       Store deleteStore = Store.find(storeId);
+       deleteStore.delete();
+       response.redirect("/stores");
+       return null;
+     });
+
+   post("/update/store/:id", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        int storeId = Integer.parseInt(request.params(":id"));
+        Store store = Store.find(storeId);
+        //String updateName = request.queryParams("updateName");
+        store.update(request.queryParams("updateName"));
+        response.redirect("/store/" + storeId);
+        return null;
+      });
   }
 }

@@ -31,4 +31,20 @@ public class AppTest extends FluentTest {
     goTo("http://localhost:4567/");
     assertThat(pageSource()).contains("Shoe Shopping!");
   }
+
+  @Test
+  public void addsStores(){
+    goTo("http://localhost:4567/stores");
+    fill("#newStore").with("Shoepie");
+    submit(".btn btn-info");
+    assertThat(pageSource()).contains("Shoepie");
+  }
+  @Test
+  public void individualStoreLinksWork() {
+    Store myStore = new Store("Shoepie");
+    myStore.save();
+    String storePath = String.format("http://localhost:4567/store/%d", myStore.getId());
+    goTo(storePath);
+    assertThat(pageSource()).contains("Shoepie");
+    }
 }

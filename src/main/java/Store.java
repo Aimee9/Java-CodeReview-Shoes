@@ -73,6 +73,10 @@ public class Store {
         con.createQuery(deleteQuery)
           .addParameter("id", id)
           .executeUpdate();
+      String joinDeleteQuery = "DELETE FROM brands_stores WHERE store_id = :storeId";
+        con.createQuery(joinDeleteQuery)
+        .addParameter("storeId", this.getId())
+        .executeUpdate();
     }
   }
 

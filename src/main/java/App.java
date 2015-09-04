@@ -16,6 +16,33 @@ public class App {
     return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+  get("/stores", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    List<Store> stores = Store.all();
+    model.put("stores", stores);
+    model.put("template", "templates/stores.vtl");
+    return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+  post("/stores", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    String newStore = request.queryParams("newStore");
+    Store store = new Store(newStore);
+    store.save();
+    response.redirect("/stores");
+    return null;
+  });
+
+  get("/store/:id", (request, response) -> {
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    Integer storeId = Integer.parseInt(request.params(":id"));
+     Store store = Store.find(storeId);
+     model.put("store", store);
+     //model.put("brands", Brand.all());
+     //model.put("storeBrands", store.getBrands());
+     model.put("template", "templates/store.vtl");
+     return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine());
 
   }
 }

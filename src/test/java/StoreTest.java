@@ -75,4 +75,14 @@ public class StoreTest {
    List savedBrands = myStore.getBrands();
    assertEquals(savedBrands.size(), 2);
  }
+ @Test
+ public void removeBrand_removesBrandFromStore() {
+   Brand myBrand = new Brand("Mizuno");
+   myBrand.save();
+   Store myStore = new Store("Bundy Shoes");
+   myStore.save();
+   myStore.addBrand(myBrand);
+   myStore.removeBrand(myBrand.getId());
+   assertFalse(myStore.getBrands().contains("Mizuno"));
+ }
 }

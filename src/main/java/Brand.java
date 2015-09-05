@@ -98,4 +98,14 @@ public class Brand {
      return stores;
    }
  }
+
+ public void removeStore(int store_id) {
+  try (Connection con = DB.sql2o.open()) {
+    String removeStoreQuery = "DELETE FROM brands_stores WHERE store_id = :store_id AND brand_id = :id";
+    con.createQuery(removeStoreQuery)
+      .addParameter("store_id", store_id)
+      .addParameter("id", this.getId())
+      .executeUpdate();
+    }
+   }
 }

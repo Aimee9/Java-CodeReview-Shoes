@@ -42,4 +42,40 @@ public class BrandTest {
     myBrand.delete();
     assertEquals(Brand.all().size(), 0);
   }
+
+  @Test
+ public void addStore_addsStoreToBrand() {
+   Brand myBrand = new Brand("Mizuno");
+   myBrand.save();
+   Store myStore = new Store("Bundy Shoes");
+   myStore.save();
+   myBrand.addStore(myStore);
+   Brand savedBrand = myStore.getBrands().get(0);
+   assertTrue(myBrand.equals(savedBrand));
+ }
+
+ @Test
+ public void getStores_returnAllStores_ArrayList() {
+   Store myStoreOne = new Store("Bundy Shoes");
+   myStoreOne.save();
+   Store myStoreTwo = new Store("Big Foot");
+   myStoreTwo.save();
+   Brand myBrand = new Brand("Converse");
+   myBrand.save();
+   myBrand.addStore(myStoreOne);
+   myBrand.addStore(myStoreTwo);
+   List savedStores = myBrand.getStores();
+   assertEquals(savedStores.size(), 2);
+ }
+
+ @Test
+  public void removeStore_removesStoreFromBrand() {
+    Store myStore = new Store("Bundy Shoes");
+    myStore.save();
+    Brand myBrand = new Brand("Converse");
+    myBrand.save();
+    myBrand.addStore(myStore);
+    myBrand.removeStore(myStore.getId());
+    assertFalse(myBrand.getStores().contains("Bundy Shoes"));
+  }
 }

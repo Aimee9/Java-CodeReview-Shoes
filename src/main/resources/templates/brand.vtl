@@ -42,11 +42,11 @@
       #foreach ($store in $brand.getStores())
       <tr>
         <td><a href="/store/$store.getId()">$store.getName()</a></td>
-        <td>
+        <!-- <td>
           <form action="/removestore/store/$store.getId()/brand/$brand.getId()" method="get">
             <button type="submit" class="btn btn-warning">This store no longer carries $brand.getLabel()</button>
           </form>
-        </td>
+        </td> -->
       </tr>
       #end
   </tbody>

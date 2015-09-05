@@ -74,6 +74,16 @@ public class App {
         return null;
       });
 
+    get("/removebrand/brand/:brandid/store/:id", (request, response) -> {
+        //HashMap<String, Object> model = new HashMap<String, Object>();
+        Integer brandId = Integer.parseInt(request.params(":brandid"));
+        Integer storeId = Integer.parseInt(request.params(":id"));
+        Store store = Store.find(storeId);
+        store.removeBrand(brandId);
+        response.redirect("/store/" + storeId);
+        return null;
+      });
+
     get("/brands", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       List<Brand> brands = Brand.all();
@@ -120,5 +130,5 @@ public class App {
       response.redirect("/brand/" + brandId);
       return null;
     });
-    }
   }
+}

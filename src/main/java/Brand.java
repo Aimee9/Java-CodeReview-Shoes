@@ -11,7 +11,7 @@ public class Brand {
 
   }
 
-  public int getBrandId() {
+  public int getId() {
     return id;
   }
 
@@ -20,7 +20,7 @@ public class Brand {
   }
 
   public static List<Brand> all() {
-    String sql = "SELECT label FROM brands";
+    String sql = "SELECT id, label FROM brands";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Brand.class);
     }
@@ -66,7 +66,7 @@ public class Brand {
 
         String joinDeleteQuery = "DELETE FROM brands_stores WHERE brand_id = :brand_id";
          con.createQuery(joinDeleteQuery)
-           .addParameter("brand_id", this.getBrandId())
+           .addParameter("brand_id", this.getId())
            .executeUpdate();
     }
   }
@@ -75,28 +75,19 @@ public class Brand {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO brands_stores (brand_id, store_id) VALUES (:brand_id, :store_id)";
       con.createQuery(sql)
-      .addParameter("brand_id", this.getBrandId())
+      .addParameter("brand_id", this.getId())
       .addParameter("store_id", store.getId())
       .executeUpdate();
     }
   }
 
-  public ArrayList<Store> getStores() {
-   try (Connection con = DB.sql2o.open()) {
-     String sql = "SELECT store_id FROM brands_stores WHERE brand_id = :brand_id";
-     List<Integer> storeIds = con.createQuery(sql)
-       .addParameter("brand_id", this.getBrandId())
-       .executeAndFetch(Integer.class);
-     ArrayList<Store> stores = new ArrayList<Store>();
-     for (Integer storeId : storeIds) {
-       String storeQuery = "SELECT * FROM stores WHERE id = :storeId";
-       Store store = con.createQuery(storeQuery)
-         .addParameter("storeId", storeId)
-         .executeAndFetchFirst(Store.class);
-       stores.add(store);
-     }
-     return stores;
-   }
+ public List<Store> getStores() {
+  try (Connection con = DB.sql2o.open()) {
+    String sql = "SELECT stores.* FROM brands JOIN brands_stores ON (brands_stores.brand_id = brands.id) JOIN stores ON (brands_stores.store_id = stores.id) WHERE brand_id=:id";
+    return con.createQuery(sql)
+    .addParameter("id", id)
+    .executeAndFetch(Store.class);
+  }
  }
 
  public void removeStore(int store_id) {

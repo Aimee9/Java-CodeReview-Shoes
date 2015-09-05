@@ -1,3 +1,33 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Shoes!</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/stores">Stores</a></li>
+        <li><a href="/brands">Brands</a></li>
+      </ul>
+      <!-- <form action="/search/results" class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" id="main-search" name="main-search" class="form-control" placeholder="Search Site">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form> -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
 <h3>$store.getName()</h3>
 <a href="/delete/store/$store.getId()" class="btn btn-danger">Delete Store</a>
 
@@ -16,7 +46,7 @@
     </tr>
   </thead>
   <tbody>
-      #foreach ($brand in $brands)
+      #foreach ($brand in $store.getBrands())
       <tr>
         <td><a href="/brand/$brand.getId()">$brand.getLabel()</a></td>
         <td>
@@ -29,12 +59,15 @@
   </tbody>
 </table>
 <!-- Button to Add New Brands -->
-<div class="buttons">
-<form action='/brands' method='post'>
-  <div class='form-group'>
-    <label>Add New Brand</label>
-    <input type="text" name="newBrand" id="newBrand" class="form-control">
+<form action="/addbrand/store/$store.getId()" method="post">
+  <div class="form-group">
+
+    <label for="brand">Add Brands this Store Carries:</label>
+    <select name="brand">
+      #foreach ($brand in $brands)
+      <option value="$brand.getId()">$brand.getLabel()
+      #end
+    </select>
+    <button type="submit" class="btn btn-success">Add Brand</button>
   </div>
-  <button type="submit" class='btn btn-info'>Submit!</button>
 </form>
-</div>

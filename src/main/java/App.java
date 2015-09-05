@@ -38,8 +38,8 @@ public class App {
     Integer storeId = Integer.parseInt(request.params(":id"));
      Store store = Store.find(storeId);
      model.put("store", store);
-     //model.put("brands", Brand.all());
-     model.put("storeBrands", store.getBrands());
+     model.put("brands", Brand.all());
+     //model.put("storesBrands", store.getBrands());
      model.put("template", "templates/store.vtl");
      return new ModelAndView(model, layout);
   }, new VelocityTemplateEngine());
@@ -59,6 +59,17 @@ public class App {
         Store store = Store.find(storeId);
         //String updateName = request.queryParams("updateName");
         store.update(request.queryParams("updateName"));
+        response.redirect("/store/" + storeId);
+        return null;
+      });
+
+   post("/addbrand/store/:id", (request, response) -> {
+        //HashMap<String, Object> model = new HashMap<String, Object>();
+        int brandId = Integer.parseInt(request.queryParams("brand"));
+        Brand addedBrand = Brand.find(brandId);
+        Integer storeId = Integer.parseInt(request.params(":id"));
+        Store store = Store.find(storeId);
+        store.addBrand(addedBrand);
         response.redirect("/store/" + storeId);
         return null;
       });
@@ -90,5 +101,24 @@ public class App {
        model.put("template", "templates/brand.vtl");
        return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    get("/brand/:id/delete", (request, response) -> {
+         HashMap<String, Object> model = new HashMap<String, Object>();
+         int brandId = Integer.parseInt(request.params(":id"));
+         Brand deleteBrand = Brand.find(brandId);
+         deleteBrand.delete();
+         response.redirect("/brands");
+         return null;
+       });
+
+    post("/brand/:id/update", (request, response) -> {
+      int storeId = Integer.parseInt(request.queryParams("store"));
+      Store addStore = Store.find(storeId);
+      Integer brandId = Integer.parseInt(request.params(":id"));
+      Brand brand = Brand.find(brandId);
+      brand.addStore(addStore);
+      response.redirect("/brand/" + brandId);
+      return null;
+    });
     }
   }

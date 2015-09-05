@@ -11,7 +11,7 @@ public class Brand {
 
   }
 
-  public int getId() {
+  public int getBrandId() {
     return id;
   }
 
@@ -63,6 +63,21 @@ public class Brand {
       con.createQuery(sql)
         .addParameter("id", id)
         .executeUpdate();
+
+        String joinDeleteQuery = "DELETE FROM brands_stores WHERE brand_id = :brand_id";
+         con.createQuery(joinDeleteQuery)
+           .addParameter("brand_id", this.getBrandId())
+           .executeUpdate();
+    }
+  }
+
+  public void addStore(Store store) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO brands_stores (brand_id, store_id) VALUES (:brand_id, :store_id)";
+      con.createQuery(sql)
+      .addParameter("brand_id", this.getBrandId())
+      .addParameter("store_id", store.getId())
+      .executeUpdate();
     }
   }
 
@@ -70,7 +85,7 @@ public class Brand {
    try (Connection con = DB.sql2o.open()) {
      String sql = "SELECT store_id FROM brands_stores WHERE brand_id = :brand_id";
      List<Integer> storeIds = con.createQuery(sql)
-       .addParameter("brand_id", this.getId())
+       .addParameter("brand_id", this.getBrandId())
        .executeAndFetch(Integer.class);
      ArrayList<Store> stores = new ArrayList<Store>();
      for (Integer storeId : storeIds) {

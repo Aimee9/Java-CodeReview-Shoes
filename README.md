@@ -11,14 +11,14 @@ This app will allow you to add the names of shoe stores and as well as shoe bran
 
 ## Setup
 
-For the Database:
-In PSQL:
-CREATE DATABASE shoes;
-CREATE TABLE stores (id serial PRIMARY KEY, name varchar);
-CREATE TABLE brands (id serial PRIMARY KEY, label varchar);
-CREATE TABLE brands_stores (id serial PRIMARY KEY, brand_id int, store_id int);
-For testing you can also include:
-CREATE DATABASE shoes_test WITH TEMPLATE shoes;
+For the Database: <br>
+In PSQL: <br>
+CREATE DATABASE shoes; <br>
+CREATE TABLE stores (id serial PRIMARY KEY, name varchar); <br>
+CREATE TABLE brands (id serial PRIMARY KEY, label varchar); <br>
+CREATE TABLE brands_stores (id serial PRIMARY KEY, brand_id int, store_id int); <br>
+For testing you can also include: <br>
+CREATE DATABASE shoes_test WITH TEMPLATE shoes; <br>
 
 ## Technologies Used
 

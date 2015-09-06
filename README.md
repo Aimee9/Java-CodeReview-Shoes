@@ -1,8 +1,8 @@
-# _{Shoes!}_
+# Shoes!
 
-##### _{Add, List, Edit and Delete Shoe Stores and the Brands They Carry}, {9/5/15}_
+##### Add, List, Edit and Delete Shoe Stores and the Brands They Carry 9/5/15
 
-#### By _**{Aimee Reiss}**_
+#### By Aimee Reiss
 
 ## Description
 
@@ -22,13 +22,12 @@ CREATE DATABASE shoes_test WITH TEMPLATE shoes;
 
 ## Technologies Used
 
--Gradle
--Spark
--fluentlenium
--Postgres
--Java
+-Gradle <br>
+-Spark <br>
+-fluentlenium <br>
+-Postgres <br>
+-Java <br>
 
-_{Tell me about the languages you used to create this app. Assume that I know you probably used HTML and CSS. If you did something really cool using only HTML, point that out.}_
 
 ### Legal
 
